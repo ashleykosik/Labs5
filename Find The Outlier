@@ -1,0 +1,22 @@
+
+function outlier (a) {
+    let evens = []
+    let odds =[]
+    for(let i = 0; i < a.length; i++) {
+        if (a[i] % 2 === 0) {
+            evens.push(a[i])
+        } else {
+            odds.push(a[i])
+        }
+    }
+    if (evens.length > odds.length) {
+        console.log(parseInt(odds)) 
+    } else {
+        console.log(parseInt(evens))
+    }
+}
+let arr = [2, 4, 0, 100, 4, 11, 2602, 36]
+let arr2 = [160, 3, 1719, 19, 11, 13, -21] 
+
+outlier(arr)
+outlier(arr2)
