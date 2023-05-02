@@ -1,0 +1,159 @@
+CREATE TABLE "Users" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Comments" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"text" TEXT NOT NULL,
+	"user" TEXT NOT NULL REFERENCES users(id),
+	"location" TEXT NOT NULL REFERENCES recipes(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Messages" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"person1" varchar(255) NOT NULL REFERENCES users(id),
+	"person2" varchar(255) NOT NULL REFERENCES users(id),
+	"message" TEXT NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Recipes" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"ingredients" TEXT NOT NULL,
+	"creator" varchar(255) NOT NULL REFERENCES users(id),
+	"text" TEXT NOT NULL,
+	"public" BOOLEAN NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "User Connections" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"person1" varchar(255) NOT NULL REFERENCES users(id),
+	"person2" varchar(255) NOT NULL REFERENCES users(id),
+	"type of interaction" TEXT NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Grocery List" (
+	"id" SERIAL PRIMARY KEY NOT NULL,
+	"user" varchar(255) NOT NULL REFERENCES users(id),
+	"ingredients" TEXT NOT NULL REFERENCES recipes(ingredients),
+	"public" BOOLEAN NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Groups" (
+	"id" serial NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"users" varchar(255) NOT NULL REFERENCES users(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Group Chats" (
+	"id" serial NOT NULL,
+	"users" varchar(255) NOT NULL REFERENCES group-users(id),
+	"group" varchar(255) NOT NULL REFERENCES groups(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "public.Group users" (
+	"id" serial NOT NULL,
+	"group id" INTEGER NOT NULL REFERENCES groups(id),
+	"users" varchar(255) NOT NULL REFERENCES users(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Auth" (
+	"session" serial NOT NULL,
+	"user id" INTEGER NOT NULL REFERENCES users(id),
+	"username" varchar(255) NOT NULL,
+	"password" TEXT NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "public.Likes" (
+	"id" serial NOT NULL,
+	"user" varchar(255) NOT NULL REFERENCES users(id),
+	"location" TEXT NOT NULL REFERENCES recipes(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Occassions" (
+	"id" serial NOT NULL,
+	"type" TEXT NOT NULL,
+	"recipes" TEXT NOT NULL REFERENCES recipes(id),
+	"user" INTEGER NOT NULL REFERENCES users(id)
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+/* DBDESIGNER creates connections between tables here
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_fk0" FOREIGN KEY ("user") REFERENCES "Users"("id");
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_fk1" FOREIGN KEY ("location") REFERENCES "Recipes"("id");
+
+ALTER TABLE "Messages" ADD CONSTRAINT "Messages_fk0" FOREIGN KEY ("person1") REFERENCES "Users"("id");
+ALTER TABLE "Messages" ADD CONSTRAINT "Messages_fk1" FOREIGN KEY ("person2") REFERENCES "Users"("id");
+
+ALTER TABLE "Recipes" ADD CONSTRAINT "Recipes_fk0" FOREIGN KEY ("creator") REFERENCES "Users"("id");
+
+ALTER TABLE "User Connections" ADD CONSTRAINT "User Connections_fk0" FOREIGN KEY ("person1") REFERENCES "Users"("id");
+ALTER TABLE "User Connections" ADD CONSTRAINT "User Connections_fk1" FOREIGN KEY ("person2") REFERENCES "Users"("id");
+
+ALTER TABLE "Grocery List" ADD CONSTRAINT "Grocery List_fk0" FOREIGN KEY ("user") REFERENCES "Users"("id");
+ALTER TABLE "Grocery List" ADD CONSTRAINT "Grocery List_fk1" FOREIGN KEY ("ingredients") REFERENCES "Recipes"("id");
+
+ALTER TABLE "Groups" ADD CONSTRAINT "Groups_fk0" FOREIGN KEY ("users") REFERENCES "Users"("id");
+
+ALTER TABLE "Group Chats" ADD CONSTRAINT "Group Chats_fk0" FOREIGN KEY ("users") REFERENCES "Users"("id");
+ALTER TABLE "Group Chats" ADD CONSTRAINT "Group Chats_fk1" FOREIGN KEY ("group") REFERENCES "Groups"("id");
+
+ALTER TABLE "Group users" ADD CONSTRAINT "Group users_fk0" FOREIGN KEY ("group id") REFERENCES "Groups"("id");
+ALTER TABLE "Group users" ADD CONSTRAINT "Group users_fk1" FOREIGN KEY ("users") REFERENCES "Users"("id");
+
+ALTER TABLE "Auth" ADD CONSTRAINT "Auth_fk0" FOREIGN KEY ("user id") REFERENCES "Users"("id");
+
+ALTER TABLE "Likes" ADD CONSTRAINT "Likes_fk0" FOREIGN KEY ("user") REFERENCES "Users"("id");
+ALTER TABLE "Likes" ADD CONSTRAINT "Likes_fk1" FOREIGN KEY ("location") REFERENCES "Recipes"("id");
+
+ALTER TABLE "Occassions" ADD CONSTRAINT "Occassions_fk0" FOREIGN KEY ("recipes") REFERENCES "Recipes"("id");
+ALTER TABLE "Occassions" ADD CONSTRAINT "Occassions_fk1" FOREIGN KEY ("user") REFERENCES "Users"("id");
+*/

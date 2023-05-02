@@ -1,0 +1,25 @@
+
+NEW APP FEATURES
+users can sign into the app with their email and password
+users can create recipes with ingredients and instructions
+recipes can be marked as public or private
+users can view other people’s recipes - search
+comments
+ingredients from recipes can be added to user’s grocery lists
+users can create their own occasions and assign recipes to occasions
+Sharing with others
+Favoriting recipes
+Users follow each other
+Groups
+Group chats
+Export to other apps?
+
+TABLES TO STORE INFORMATION
+Users info
+recipes(hold ingredients & instructions)
+Users connections between users - follows
+Comments & Likes
+messages
+Grocery lists (bring in ingredients)
+Groups -> group chats
+occasions(label) brings in recipes
